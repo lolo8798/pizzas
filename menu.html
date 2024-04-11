@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzería</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #f8d7da;
+        padding: 10px 0;
+        text-align: center;
+    }
+    nav {
+        background-color: #dc3545;
+        text-align: center;
+        padding: 10px 0;
+    }
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin: 0 20px;
+        cursor: pointer;
+    }
+    section {
+        display: none;
+        padding: 20px;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>REX.PI</h1>
+    </header>
+    <nav>
+        <a onclick="mostrarContenido('menu')">Menú</a>
+        <a onclick="mostrarContenido('promociones')">Promociones</a>
+        <a onclick="mostrarContenido('ubicacion')">Ubicación</a>
+        <a onclick="mostrarContenido('pedido')">Pedido a domicilio</a>
+    </nav>
+    <section id="menu">
+        <center> 
+        <div class="intro">
+            <h2>Bienvenido a la Pizzería</h2> <center> 
+            <p>Somos tu mejor opción para disfrutar de deliciosas pizzas caseras y economicas</p>
+            <img src="https://via.placeholder.com/800x400" alt="Imagen de la Pizzería">
+          </div> </center> </center>
+    </section>
+    <section id="promociones"> <center>
+        <h2>Promociones</h2>
+        <div class="pizza">
+            <img src="https://via.placeholder.com/300" alt="Pizza 1">
+           <li><h3>Pizza Hawaiana - 110 <input type="checkbox" value="110" onclick="calcularTotal(this)"></li></h3></li>
+            
+            
+            <p>Promoción: 20% de descuento</p>
+          </div>
+          <div class="pizza"> 
+            <img src="https://via.placeholder.com/300" alt="Pizza 2">
+            <li><h3>Pizza Pepperoni - 110<input type="checkbox" value="110" onclick="calcularTotal(this)"></li></h3> </li>
+            <p>Promoción: Lleva 2 y paga 1</p>
+          </div>
+          <div class="pizza">
+            <img src="https://via.placeholder.com/300" alt="Pizza 3">
+            <li> <h3>Pizza Vegetariana - 130 <input type="checkbox" value="130" onclick="calcularTotal(this)"></li></h3> </li>
+            <p>Promoción: Combo con bebida gratis</p>
+            <div class="pizza">
+                <img src="https://via.placeholder.com/300" alt="bebidas">
+            <li>Refresco - $18 <input type="checkbox" value="18" onclick="calcularTotal(this)"></li>
+            <li>Jugo natural - $15 <input type="checkbox" value="15" onclick="calcularTotal(this)"></li>
+            <li>Agua mineral - $20 <input type="checkbox" value="20" onclick="calcularTotal(this)"></li>
+            <p>Total a pagar: $<span id="total">0</span></p>
+                <script>
+                    function mostrarContenido(id) {
+                        var secciones = document.getElementsByTagName('section');
+                        for (var i = 0; i < secciones.length; i++) {
+                            secciones[i].style.display = 'none';
+                        }
+                        document.getElementById(id).style.display = 'block';
+                    }
+                    function agregarOpcion() {
+            var nuevaOpcion = document.getElementById('nuevaOpcion').value;
+            var listaPedido = document.getElementById('pedido');
+            var nuevaOpcionLi = document.createElement('li');
+            nuevaOpcionLi.textContent = nuevaOpcion;
+            listaPedido.appendChild(nuevaOpcionLi);
+            document.getElementById('nuevaOpcion').value = '';
+
+            calcularTotal();
+        }
+            
+                    function calcularTotal(element) {
+                        var total = 0;
+                        var checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+                        checkboxes.forEach(function(checkbox) {
+                            total += parseFloat(checkbox.value);
+                        });
+                        document.getElementById('total').textContent = total;
+                    }
+                </script> </div> </center>
+    </section>
+    <section id="ubicacion"><center>
+        <h2>Ubicación de la Pizzería</h2>
+  <p>gladiola Calle alheli, Ciudad de mexico </p>
+  <img src="https://via.placeholder.com/800x400" alt="Mapa de la Ubicación">
+  <button onclick="trazarCamino()">Trazar Camino</button>
+</section> </center>
+
+<script>
+function trazarCamino() {
+    // Aquí se añadiría la funcionalidad para trazar el camino en un mapa real
+    alert("Se está trazando el camino hacia la pizzería. ¡Gracias por usar nuestro servicio!");
+}
+</script>
+    </section>
+    <section id="pedido"> <center>
+        <h2>Pedido a domicilio</h2>
+        
+            <button onclick="mostrarPizzas()">Hacer Pedido</button>
+          </section> </center>
+          
+          <section id="pizzas" style="display: none;"> <center>
+            <h2>Selecciona tu pizza:</h2>
+            <button onclick="mostrarPago()">Pizza Hawaiana</button>
+            <button onclick="mostrarPago()">Pizza Pepperoni</button>
+            <button onclick="mostrarPago()">Pizza Vegetariana</button>
+            <button onclick="mostrarPago()"> bebidas </button>
+          </section> </center>
+          
+          <section id="pago" style="display: none;"> <center>
+            <h2>Selecciona forma de pago:</h2>
+            <button onclick="pagoEfectivo()">Pagar en Efectivo</button>
+            <button onclick="pagoLinea()">Pagar en Línea
+                <div class="container">
+                    
+                    <p>Ingrese los datos de su tarjeta para realizar el pago:</p>
+                    <form action="procesar_pago.php" method="post">
+                        <input type="text" name="numero_tarjeta" placeholder="Número de tarjeta" required><br>
+                        <input type="text" name="ccv" placeholder="CCV" required><br>
+                        <input type="text" name="propietario" placeholder="Nombre del propietario" required><br>
+                        <button type="submit">Pagar</button>
+                    </form></button>
+            
+                </form>
+          </section></center>
+          
+          <script> 
+          function mostrarPizzas() {
+              document.getElementById("pedido").style.display = "none";
+              document.getElementById("pizzas").style.display = "block";
+          }
+          
+          function mostrarPago() {
+              document.getElementById("pizzas").style.display = "none";
+              document.getElementById("pago").style.display = "block";
+          }
+          
+          function pagoEfectivo() {
+              alert("Gracias por tu compra. Pago en Efectivo.");
+              window.location.href ="file:///E:/papupro/menu.html";
+          }
+          
+          function pagoLinea() {
+              alert("Gracias por tu compra. Pago en Línea.");
+              window.location.href ="file:///E:/papupro/menu.html";
+             
+          }
+          </script> 
+    
+
+    <script> 
+        function mostrarContenido(id) {
+            var secciones = document.getElementsByTagName('section');
+            for (var i = 0; i < secciones.length; i++) {
+                secciones[i].style.display = 'none';
+            }
+            document.getElementById(id).style.display = 'block';
+        }
+    </script> 
+    <footer> 
+        <p>Contacto: 123-456-789</p>
+        <p>Facebook: Jesus Funado</p>
+      </footer>
+</body>
+</html>
